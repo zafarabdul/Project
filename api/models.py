@@ -12,6 +12,7 @@ class EntryData(models.Model):
     key = models.CharField(max_length=15)
     message = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='', blank=True, null=True)
+    algoId = models.TextField()
 
     def __str__(self):
         return f"{self.user_entry.custom_id} - {self.key}"
