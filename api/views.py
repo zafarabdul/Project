@@ -7,11 +7,11 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import UserEntry, EntryData
 from .serializers import UserEntrySerializer, EntryDataSerializer
 
-@csrf_exempt
-@api_view(['GET', 'POST'])
-@authentication_classes([])
-@permission_classes([])
-@parser_classes([MultiPartParser, FormParser])
+# @csrf_exempt
+# @api_view(['GET', 'POST'])
+# @authentication_classes([])
+# @permission_classes([])
+# @parser_classes([MultiPartParser, FormParser])
 # def data_entry_list_create(request):
 #     if request.method == 'GET':
 #         queryset = UserEntry.objects.all()

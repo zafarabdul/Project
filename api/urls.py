@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import data_entry_message, data_entry_photo, data_entry_list_create, register_gmail
+from .views import data_entry_message, data_entry_photo, register_gmail
 
 urlpatterns = [
     # path('data/', name='data-list-create'),
