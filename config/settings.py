@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-8^e&lo!k*@5#awop3u93!t%4dv9qd=+q#z*(jygizkpq%#ed%a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['crypteaseback.duckdns.org' , 'crypteaselambda.duckdns.org']
+ALLOWED_HOSTS = ['crypteaseback.duckdns.org', 'crypteaselambda.duckdns.org', 'vjloab494k.execute-api.us-east-1.amazonaws.com']
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://vjloab494k.execute-api.us-east-1.amazonaws.com",
+]
 
 
 # Application definition
@@ -38,12 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'api',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -118,7 +125,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MEDIA_URL = ''
+
+MEDIA_URL = '/images/'
 MEDIA_ROOT = BASE_DIR / 'images'
 
 # Default primary key field type
