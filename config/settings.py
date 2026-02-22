@@ -25,11 +25,14 @@ SECRET_KEY = 'django-insecure-8^e&lo!k*@5#awop3u93!t%4dv9qd=+q#z*(jygizkpq%#ed%a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['crypteaseback.duckdns.org', 'crypteaselambda.duckdns.org', 'vjloab494k.execute-api.us-east-1.amazonaws.com']
+ALLOWED_HOSTS = ['crypteaseback.duckdns.org', 'crypteaselambda.duckdns.org', 'crypteasefrontend.duckdns.org' ,'https://vjloab494k.execute-api.us-east-1.amazonaws.com']
 CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://vjloab494k.execute-api.us-east-1.amazonaws.com",
+    "https://crypteaseback.duckdns.org",
+    "https://crypteaselambda.duckdns.org",
+    "https://crypteasefrontend.duckdns.org",
 ]
 
 
