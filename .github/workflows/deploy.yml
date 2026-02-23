@@ -23,7 +23,8 @@ jobs:
             cd ~/Project
 
             # 2. Get latest code
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
 
             # 3. Create .env file from secrets
             cat <<EOF > .env
