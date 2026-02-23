@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'storages',
     'api',
 ]
 
@@ -128,9 +129,36 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# AWS S3 Settings
+import os
+from environs import Env
+from dotenv import load_dotenv
 
-MEDIA_URL = '/images/'
-MEDIA_ROOT = BASE_DIR / 'images'
+# Force load .env from the base directory
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+env = Env()
+env.read_env()  # read .env file, if it exists
+
+AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID', default=None)
+AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY', default=None)
+AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME', default=None)
+AWS_S3_REGION_NAME = env.str('AWS_S3_REGION_NAME', default='us-east-1')
+
+if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY and AWS_STORAGE_BUCKET_NAME:
+    # Use S3 for Media files (Modern Django 5.x way)
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    AWS_QUERYSTRING_AUTH = True  # Enable signed URLs
+    AWS_QUERYSTRING_EXPIRE = 3600  # Link lasts for 1 hour
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
