@@ -11,9 +11,9 @@ class EntryData(models.Model):
     user_entry = models.ForeignKey(UserEntry, on_delete=models.CASCADE, related_name='data_entries')
     key = models.CharField(max_length=15 , blank=True, null=True)
     message = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='', blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
     algoId = models.TextField(blank=True, null=True)
-    algo_file = models.FileField(upload_to='', blank=True, null=True)
+    algo_file = models.FileField(upload_to='algos/', blank=True, null=True)
     expires_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):

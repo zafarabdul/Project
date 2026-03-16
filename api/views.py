@@ -85,11 +85,9 @@ def handle_data_entry(request, custom_id, key, field_type , algoId = ''):
         retMes = 'updated'
         try:
             user_entry = UserEntry.objects.get(custom_id=custom_id)
-            try:
-                entry_data = EntryData.objects.get(user_entry=user_entry, key=key)
-            except EntryData.DoesNotExist:
-                entry_data = EntryData.objects.create(user_entry=user_entry, key=key)
-                retMes = 'created'
+            # Always create a new entry to store multiple files/messages for the same key
+            entry_data = EntryData.objects.create(user_entry=user_entry, key=key)
+            retMes = 'created'
             
             ttl = request.data.get('ttl')
             if ttl:
@@ -124,7 +122,8 @@ def handle_data_entry(request, custom_id, key, field_type , algoId = ''):
     elif request.method == 'GET':
         try:
             user_entry = UserEntry.objects.get(custom_id=custom_id)
-            entry_data = EntryData.objects.get(user_entry=user_entry, key=key)
+            # Retrieve the latest entry for this key
+            entry_data = EntryData.objects.filter(user_entry=user_entry, key=key).latest('id')
             
             # Check for TTL expiry
             if entry_data.expires_at and entry_data.expires_at < timezone.now():
